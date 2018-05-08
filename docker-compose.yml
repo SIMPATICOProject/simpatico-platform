@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    container_name: "aac-mysql"
+    env_file: ./aac/mysql.env
+    restart: always
+  aac:
+    image: simpatico-project/aac
+    depends_on: 
+      - mysql
+    links:
+      - mysql:mysql-server
+    container_name: "aac"
+    ports:
+      - 8000:8080
+    env_file: ./aac/aac.env
+volumes:
+  mysql-data:
