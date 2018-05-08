@@ -37,6 +37,24 @@ services:
       - mongo:mongodb
     volumes:
       - ./gamification/run-configs:/app/run-configs
+  upm-db:
+    image: upm-db
+    volumes:
+      - upm-db-data:/var/lib/mysql
+    container_name: "upm-db"
+    env_file: ./upm/upm-db.env
+    restart: always
+  upm-server:
+    image: upm-server
+    depends_on: 
+      - upm-db
+    links:
+      - upm-db:mysql-server
+    container_name: "upm-server"
+    ports:
+      - 1616:1616
+      - 1717:1717
 volumes:
   mysql-data:
   mongo-data:
+  upm-db-data:
