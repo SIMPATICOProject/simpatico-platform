@@ -1,59 +1,59 @@
 version: '3'
 
 services:
-  #aac-db:
-    #image: mysql
-    #volumes:
-      #- aac-db-data:/var/lib/mysql
-    #container_name: "aac-mysql"
-    #env_file: ./aac/mysql.env
-    #restart: always
-  #aac:
-    #image: simpatico-project/aac
-    #depends_on: 
-      #- aac-db
-    #links:
-      #- aac-db:mysql-server
-    #container_name: "aac"
-    #ports:
-      #- 8000:8080
-    #env_file: ./aac/aac.env
-  #mongo:
-   #image: mongo:3.6.2-jessie
-   #container_name: gamification-mongo
-   #ports:
-     #- "50000:27017"
-   #volumes:
-     #- mongo-data:/data/db
-  #gamification-engine:
-    #image: simpaticoproject/gamificationengine:2.4.0-53f06cd
-    #container_name: gamification-engine
-    #ports:
-      #- "8010:8010"
-      #- "7777:7777"
-    #depends_on:
-      #- mongo
-    #links:
-      #- mongo:mongodb
-    #volumes:
-      #- ./gamification/run-configs:/app/run-configs
-  #upm-db:
-    #image: upm-db
-    #volumes:
-      #- upm-db-data:/var/lib/mysql
-    #container_name: "upm-db"
-    #env_file: ./upm/upm-db.env
-    #restart: always
-  #upm-server:
-    #image: upm-server
-    #depends_on: 
-      #- upm-db
-    #links:
-      #- upm-db:mysql-server
-    #container_name: "upm-server"
-    #ports:
-      #- 1616:1616
-      #- 1717:1717
+  aac-db:
+    image: mysql
+    volumes:
+      - aac-db-data:/var/lib/mysql
+    container_name: "aac-mysql"
+    env_file: ./aac/mysql.env
+    restart: always
+  aac:
+    image: simpatico-project/aac
+    depends_on: 
+      - aac-db
+    links:
+      - aac-db:mysql-server
+    container_name: "aac"
+    ports:
+      - 8000:8080
+    env_file: ./aac/aac.env
+  gamification-db:
+   image: mongo:3.6.2-jessie
+   container_name: gamification-db
+   ports:
+     - 50000:27017
+   volumes:
+     - gamification-db-data:/data/db
+  gamification-engine:
+    image: simpaticoproject/gamificationengine:2.4.0-53f06cd
+    container_name: gamification-engine
+    ports:
+      - 8010:8010
+      - 7777:7777
+    depends_on:
+      - gamification-db
+    links:
+      - gamification-db:mongodb
+    volumes:
+      - ./gamification/run-configs:/app/run-configs
+  upm-db:
+    image: upm-db
+    volumes:
+      - upm-db-data:/var/lib/mysql
+    container_name: "upm-db"
+    env_file: ./upm/upm-db.env
+    restart: always
+  upm-server:
+    image: upm-server
+    depends_on: 
+      - upm-db
+    links:
+      - upm-db:mysql-server
+    container_name: "upm-server"
+    ports:
+      - 1616:1616
+      - 1717:1717
   sae-db:
     image: mongo:3.6.2-jessie
     container_name: sae-db
@@ -73,6 +73,6 @@ services:
     env_file: ./sae/app.env
 volumes:
   aac-db-data:
-  mongo-data:
+  gamification-db-data:
   upm-db-data:
   sae-db-data:
