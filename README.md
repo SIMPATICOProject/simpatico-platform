@@ -22,3 +22,9 @@ Edit users in `gamification/run-configs/users.yml`
 ### Configurations
 
 Edit properties in `upm/upm-db.env`
+
+## Adaptation Engines
+
+### Configurations
+
+Edit properties in `sae/app.env`
