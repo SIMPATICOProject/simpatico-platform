@@ -1,0 +1,5 @@
+{
+  "base_url": "/",
+  "citizenpedia_url": "http://192.168.26.71:9000/api",
+  "ife_url": "https://simpatico.hi-iberia.es:4570/simpatico/api"
+}

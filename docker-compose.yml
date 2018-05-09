@@ -5,7 +5,7 @@ services:
     image: mysql
     volumes:
       - aac-db-data:/var/lib/mysql
-    container_name: "aac-mysql"
+    container_name: aac-mysql
     env_file: ./aac/mysql.env
     restart: always
   aac:
@@ -14,7 +14,7 @@ services:
       - aac-db
     links:
       - aac-db:mysql-server
-    container_name: "aac"
+    container_name: aac
     ports:
       - 8000:8080
     env_file: ./aac/aac.env
@@ -41,7 +41,7 @@ services:
     image: upm-db
     volumes:
       - upm-db-data:/var/lib/mysql
-    container_name: "upm-db"
+    container_name: upm-db
     env_file: ./upm/upm-db.env
     restart: always
   upm-server:
@@ -50,7 +50,7 @@ services:
       - upm-db
     links:
       - upm-db:mysql-server
-    container_name: "upm-server"
+    container_name: upm-server
     ports:
       - 1616:1616
       - 1717:1717
@@ -71,6 +71,17 @@ services:
     links:
       - sae-db:mongodb
     env_file: ./sae/app.env
+  esm:
+    build:
+      context: ../eSM
+    container_name: esm
+    volumes:
+      - ./esm:/app-run
+    entrypoint:
+      - sh
+      - /app-run/docker-entrypoint.sh
+    ports:
+      - 3700:3700
 volumes:
   aac-db-data:
   gamification-db-data:
