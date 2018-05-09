@@ -82,8 +82,39 @@ services:
       - /app-run/docker-entrypoint.sh
     ports:
       - 3700:3700
+  qae-gateway:
+    image: nginx:alpine
+    volumes:
+      - ./citizenpedia/web:/usr/share/nginx/html
+      - ./citizenpedia/web/conf.d:/etc/nginx/conf.d
+    ports:
+      - 8100:80
+    restart: always
+  qae-db:
+    restart: always
+    image: mongo:latest
+    container_name: qae-db
+    volumes:
+      - qae-db-data:/data/db
+    ports:
+      - 50002:27017
+  qae:
+    build:
+      context: ../citizenpedia
+    depends_on:
+      - qae-db
+    links:
+      - qae-db:mongodb
+    volumes:
+      - ./citizenpedia/server:/app-run
+    entrypoint:
+      - sh
+      - /app-run/docker-entrypoint.sh
+    ports:
+      - 9000:9000
 volumes:
   aac-db-data:
   gamification-db-data:
   upm-db-data:
   sae-db-data:
+  qae-db-data:
