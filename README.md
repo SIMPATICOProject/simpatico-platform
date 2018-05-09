@@ -28,3 +28,11 @@ Edit properties in `upm/upm-db.env`
 ### Configurations
 
 Edit properties in `sae/app.env`
+
+## ESM
+
+:warning: Actually you have to clone eSM repository at the same level of simpatico-platform to work :warning:
+
+### Configurations
+
+Edit properties in `esm/configs/properties.json`
