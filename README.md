@@ -36,3 +36,15 @@ Edit properties in `sae/app.env`
 ### Configurations
 
 Edit properties in `esm/configs/properties.json`
+
+## Citizenpedia
+
+:warning: Actually you have to clone citizenpedia repository at the same level of simpatico-platform to work :warning:
+
+### Configurations
+
+#### Gateway
+Edit properties in `citizenpedia/web` folder
+
+#### Server
+Edit properties in `citizenpedia/server/config` folder
