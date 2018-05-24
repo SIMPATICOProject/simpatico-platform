@@ -38,14 +38,14 @@ services:
     volumes:
       - ./gamification/run-configs:/app/run-configs
   upm-db:
-    image: upm-db
+    image: simpaticoproject/upm-db:1.0.0
     volumes:
       - upm-db-data:/var/lib/mysql
     container_name: upm-db
     env_file: ./upm/upm-db.env
     restart: always
   upm-server:
-    image: upm-server
+    image: simpaticoproject/upm-server:1.0.0
     depends_on: 
       - upm-db
     links:
