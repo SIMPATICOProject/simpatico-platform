@@ -9,14 +9,14 @@ services:
     env_file: ./aac/mysql.env
     restart: always
   aac:
-    image: simpatico-project/aac
+    image: simpaticoproject/aac:1.1.0
     depends_on: 
       - aac-db
     links:
       - aac-db:mysql-server
     container_name: aac
     ports:
-      - 8000:8080
+      - 8500:8080
     env_file: ./aac/aac.env
   gamification-db:
    image: mongo:3.6.2-jessie
@@ -62,7 +62,8 @@ services:
     volumes:
       - sae-db-data:/data/db
   sae-server:
-    image: simpaticoproject/adaptationengines:1.1.0
+    build:
+      context: ../simpatico-tae
     container_name: sae-server
     ports:
       - 8001:80
@@ -70,7 +71,7 @@ services:
       - sae-db
     links:
       - sae-db:mongodb
-    env_file: ./sae/app.env
+    env_file: ../simpatico-platform/sae/app.env
   esm:
     build:
       context: ../eSM
@@ -96,8 +97,6 @@ services:
     container_name: qae-db
     volumes:
       - qae-db-data:/data/db
-    ports:
-      - 50002:27017
   qae:
     build:
       context: ../citizenpedia
@@ -108,10 +107,15 @@ services:
     volumes:
       - ./citizenpedia/server:/app-run
     entrypoint:
-      - sh
+      - /bin/sh
       - /app-run/docker-entrypoint.sh
-    ports:
-      - 9000:9000
+    environment:
+      - AAC_ID=
+      - AAC_SECRET=
+      - AAC_ROOT_URL=
+      - AAC_TOKEN_URL=
+      - AAC_URL=
+      - AAC_CALLBACK_URL=
 volumes:
   aac-db-data:
   gamification-db-data:
