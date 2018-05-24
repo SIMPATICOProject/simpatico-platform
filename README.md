@@ -47,4 +47,13 @@ Edit properties in `esm/configs/properties.json`
 Edit properties in `citizenpedia/web` folder
 
 #### Server
-Edit properties in `citizenpedia/server/config` folder
+Edit qae section of `docker-compose.yml`
+```
+  environment:
+      - AAC_ID=
+      - AAC_SECRET=
+      - AAC_ROOT_URL=
+      - AAC_TOKEN_URL=
+      - AAC_URL=
+      - AAC_CALLBACK_URL=
+```
