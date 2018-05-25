@@ -116,6 +116,36 @@ services:
       - AAC_TOKEN_URL=
       - AAC_URL=
       - AAC_CALLBACK_URL=
+  logs:
+    build:
+      context: ../logs
+      dockerfile: Dockerfile.platform
+    container_name: logs
+    env_file: ./logs/logs.env
+    depends_on:
+      - es-logs
+    links:
+      - es-logs:es
+    ports:
+      - 8899:8080
+  es-logs:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.3
+    container_name: es-logs
+    environment:
+      - cluster.name=simpatico
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
 volumes:
   aac-db-data:
   gamification-db-data:
