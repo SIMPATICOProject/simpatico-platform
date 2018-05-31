@@ -37,6 +37,10 @@ services:
       - gamification-db:mongodb
     volumes:
       - ./gamification/run-configs:/app/run-configs
+      - ./gamification/game:/app-run
+    entrypoint: 
+      - /bin/sh
+      - /app-run/docker-entrypoint.sh
   upm-db:
     image: simpaticoproject/upm-db:1.0.0
     volumes:
@@ -97,6 +101,8 @@ services:
     container_name: qae-db
     volumes:
       - qae-db-data:/data/db
+    ports:
+      - 28017:27017
   qae:
     build:
       context: ../citizenpedia
